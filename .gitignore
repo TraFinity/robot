@@ -1,23 +1,38 @@
-# Compiled class file
-*.class
+.DS_Store
 
-# Log file
+**/.DS_Store
+.idea
+bin
+build
+target
+.settings
+.classpath
+.project
+dependency-reduced-pom.xml
+*.sublime-*
+.gradle
+*.iml
+app/common/dal/generator_error.log
+app/test/~/logs
 *.log
+logs/
 
-# BlueJ files
-*.ctxt
+.vscode
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
+*.iml
 
-# Package Files #
-*.jar
-*.war
-*.nar
-*.ear
-*.zip
-*.tar.gz
-*.rar
+.metadata
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
+node_modules
+static/node_modules/
+**/.factorypath
+velocity.log**
+.gradle
+src/main/resources/static/api
+src/main/resources/static/api
+src/test/
+pic
+deploy/config/config_dev.properties
+deploy/config/config_test.properties
+deploy/config/config_prd.properties
+deploy/config/config_hk.properties

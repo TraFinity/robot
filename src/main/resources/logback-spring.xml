@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration scan="true" scanPeriod="5 seconds">
+    <property name="LOG_ROOT" value="${base_path:-.}/logs"/>
+    <property name="FILE_PATH_WARN" value="${LOG_ROOT}/warn.log"/>
+    <property name="FILE_PATH_INFO" value="${LOG_ROOT}/info.log"/>
+    <property name="FILE_PATH_ACCESS" value="${LOG_ROOT}/access.log"/>
+    <property name="FILE_PATH_MQ" value="${LOG_ROOT}/mq.log"/>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%date{ISO8601} [%thread] %-5level %logger.%method:%line - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <appender name="FILE-WARN" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${FILE_PATH_WARN}</file>
+        <encoder charset="UTF-8">
+            <pattern>%date{ISO8601} [%thread] %-5level %logger.%method:%line - %msg%n</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <FileNamePattern>${FILE_PATH_WARN}.%d{yyyy-MM-dd}.%i.log</FileNamePattern>
+            <MaxFileSize>50MB</MaxFileSize>
+            <totalSizeCap>1GB</totalSizeCap>
+            <MaxHistory>10</MaxHistory>
+        </rollingPolicy>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>WARN</level>
+        </filter>
+    </appender>
+
+    <appender name="FILE-INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${FILE_PATH_INFO}</file>
+        <encoder charset="UTF-8">
+            <pattern>%date{ISO8601} [%thread] %-5level %logger.%method:%line - %msg%n</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <FileNamePattern>${FILE_PATH_INFO}.%d{yyyy-MM-dd}.%i.log</FileNamePattern>
+            <MaxFileSize>50MB</MaxFileSize>
+            <totalSizeCap>2GB</totalSizeCap>
+            <MaxHistory>10</MaxHistory>
+        </rollingPolicy>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+    </appender>
+
+    <appender name="mq_appender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${FILE_PATH_MQ}</file>
+        <encoder charset="UTF-8">
+            <pattern>%date{ISO8601} [%thread] %-5level %logger.%method:%line - %msg%n</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <FileNamePattern>${FILE_PATH_MQ}.%d{yyyy-MM-dd}.%i.log</FileNamePattern>
+            <MaxFileSize>50MB</MaxFileSize>
+            <totalSizeCap>1GB</totalSizeCap>
+            <MaxHistory>10</MaxHistory>
+        </rollingPolicy>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+    </appender>
+
+    <!-- 记录访问日志 -->
+    <logger name="mq" level="INFO">
+        <appender-ref ref="mq_appender"/>
+    </logger>
+
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="FILE-INFO"/>
+        <appender-ref ref="FILE-WARN"/>
+    </root>
+</configuration>

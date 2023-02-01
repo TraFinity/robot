@@ -1,0 +1,72 @@
+server:
+  address: 127.0.0.1
+  port: 8002
+
+spring:
+  devtools:
+    restart:
+      enabled: true
+      exclude: static/**,public/**
+  jackson:
+    date-format: yyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  servlet:
+    multipart:
+      max-file-size: 4MB
+      max-request-size: 4MB
+  mvc:
+    static-path-pattern=/static/**
+  freemarker:
+    checkTemplateLocation: false
+  datasource:
+    url: jdbc:mysql://${dongdu_db_address}/DongDu?useUnicode=true&characterEncoding=UTF-8&characterSetResults=utf8&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false&allowMultiQueries=true&rewriteBatchedStatements=true
+    username: ${dongdu_db_user}
+    password: ${dongdu_db_pwd}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 15
+      connection-test-query: SELECT 1
+      max-lifetime: 1800000
+      connection-timeout: 30000
+      pool-name: DatebookHikariCP
+  redis:
+    host: ${dongdu_redis_host}
+    password: ${dongdu_redis_pwd}
+    port: ${dongdu_redis_port}
+    url: redis://${dongdu_redis_pwd}@${dongdu_redis_host}:${dongdu_redis_port}
+    timeout: 120000
+    lettuce:
+      pool:
+        # 最大连接数
+        max-active: 8
+        # 最大空闲连接数
+        max-idle: 8
+        # 最小空闲连接
+        min-idle: 2
+        # 最大阻塞等待时间
+        max-wait: 100
+mybatis:
+  configuration:
+    cache-enabled: true
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+  mapper-locations: classpath*:sqlmap/*/*.xml
+
+pagehelper:
+  helper-dialect: mysql
+  support-methods-arguments: true
+  resonable: true
+  page-size-zero: true
+  params: count=countSql
+  row-bounds-with-count: true
+
+mapper:
+  mappers: tk.mybatis.mapper.common.BaseMapper
+  not-empty: false
+  identity: mysql
+
+logging:
+  level:
+    root: INFO
